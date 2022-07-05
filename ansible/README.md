@@ -6,3 +6,20 @@ Con la automatización que ofrece Ansible, puede instalar los sistemas de softwa
 
 https://ttl255.com/jinja2-tutorial-part-1-introduction-and-variable-substitution/
 
+
+Examples:
+
+## macos_installpacks.yaml
+
+Notas: Cuando se ejecuta puede salir un error 
+Error: Fetching /usr/local/Homebrew/Library/Taps/chef/homebrew-chef failed
+esto se soluciona ejecutando un brew update-reset, esto lo podriamos incluir en las mismas tareas de ansible (estoy aprendiendo, asi que lo dejare cuando haya soltado mas la mano con respecto al codigo usado.)
+
+## install update & upgrade software en hosts (vere si puede detectar OS versiones etc al resepcto)
+
+Notas:
+
+
+## deploy (aca veremos algun deploy de puede ser un nginx, y alguna pagina demo para posteriormente agregar MySQL y otros servicios complementarios al mismo deploy).
+
+Notas:
