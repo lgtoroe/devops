@@ -1,0 +1,15 @@
+
+---
+- name: Let's copy our executable script to remote location, execute script and get result back.
+  remote_user: root
+  #sudo: yes
+  hosts: proxmox
+  tasks:
+     #- name: Transfer executable script script
+     #  copy: src=/opt/ashah/crunchify-script.sh dest=/opt/ashah mode=0777
+ 
+     - name: Execute update
+       command: apt update
+
+     - name: Execute dist-upgrade
+       command: apt dist-upgrade -y

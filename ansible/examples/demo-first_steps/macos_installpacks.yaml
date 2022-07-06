@@ -4,62 +4,62 @@
   become: false
   vars:
     brew_cask_packages:
-      - atom
-      - docker
-      - dropbox
-      - firefox
-      - google-chrome
-      - google-drive
-      - google-hangouts
-      - iterm2
-      - keepassx
-      - kodi
-      - lastpass
-      - macvim
-      - royal-tsx
-      - skype
-      - slack
-      - sling
-      - spotify
-      - sublime-text
-      - vagrant
-      - vagrant-manager
-      - virtualbox
-      - virtualbox-extension-pack
-      - visual-studio-code
-      - vmware-fusion
+      #- atom
+      #- docker
+      #- dropbox
+      #- firefox
+      #- google-chrome
+      #- google-drive
+      #- google-hangouts
+      #- iterm2
+      #- keepassx
+      #- kodi
+      #- lastpass
+      #- macvim
+      #- royal-tsx
+      #- skype
+      #- slack
+      #- sling
+      #- spotify
+      #- sublime-text
+      #- vagrant
+      #- vagrant-manager
+      #- virtualbox
+      #- virtualbox-extension-pack
+      #- visual-studio-code
+      #- vmware-fusion
     brew_packages:
-      - autoconf
+      #- autoconf
       - bash-completion
-      - boot2docker
-      - consul
+      #- boot2docker
+      #- consul
       - docker-compose
-      - docker-machine
-      - doxygen
+      #- docker-machine
+      #- doxygen
       - git
-      - git-lfs
+      #- git-lfs
       - go
       - jq
       - nginx
       - nmap
-      - nomad
+      #- nomad
       - openssl
-      - packer
-      - pyenv
+      #- packer
+      #- pyenv
       - python
-      - rancher-compose
-      - rbenv
-      - ruby-build
+      #- rancher-compose
+      #- rbenv
+      #- ruby-build
       - ssh-copy-id
       - terraform
-      - terraform-inventory
-      - terraform-provisioner-ansible
-      - tmux
+      #- terraform-inventory
+      #- terraform-provisioner-ansible
+      #- tmux
       - tree
-      - vault
+      #- vault
       - wget
       - zsh
-      - zsh-syntax-highlighting
+      #- zsh-syntax-highlighting
     install_homebrew_if_missing: false
     # python_modules:
     #   - configparser
@@ -99,13 +99,13 @@
       until: result is successful
       when: homebrew_check.stat.exists
 
-    - name: Installing Homebrew Cask Packages
-      homebrew_cask:
-        name: "{{ brew_cask_packages }}"
-        state: present
-      register: result
-      until: result is successful
-      when: homebrew_check.stat.exists
+    #- name: Installing Homebrew Cask Packages
+    #  homebrew_cask:
+    #    name: "{{ brew_cask_packages }}"
+    #    state: present
+    #  register: result
+    #  until: result is successful
+    #  when: homebrew_check.stat.exists
 
     - name: Installing Homebrew Packages
       homebrew:
