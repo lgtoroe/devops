@@ -1,0 +1,68 @@
+##
+# You should look at the following URL's in order to grasp a solid understanding
+# of Nginx configuration files in order to fully unleash the power of Nginx.
+# http://wiki.nginx.org/Pitfalls
+# http://wiki.nginx.org/QuickStart
+# http://wiki.nginx.org/Configuration
+#
+# Generally, you will want to move this file somewhere, and start with a clean
+# file but keep this around for reference. Or just disable in sites-enabled.
+#
+# Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
+##
+
+# Default server configuration
+#
+map $sent_http_content_type $age {
+    default "0";
+    video/mp2t "300";
+    application/vnd.apple.mpegurl "2";
+    audio/x-mpegurl "2";
+}
+
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/hls;
+
+
+        add_header 'Access-Control-Allow-Origin' '*';
+        add_header 'Access-Control-Allow-Credentials' 'true';
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+        add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
+
+
+    # Add index.php to the list if you are using PHP
+    # index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+    location /crossdomain.xml  {
+        return 200 "<?xml version=\"1.0\" ?>
+<cross-domain-policy>
+ <site-control permitted-cross-domain-policies=\"master-only\"/>
+ <allow-access-from domain=\"*\"/>
+ <allow-http-request-headers-from domain=\"*\" headers=\"*\"/>
+</cross-domain-policy>";
+    }
+
+    location / {
+        # Don't cache if file is m3u8
+        #add_header "Cache-Control" "public, must-revalidate, proxy-revalidate, max-age=0";
+        add_header "Cache-Control" "max-age=${age}";
+
+	#PNW: 30 nov: la configuracion esta bien enrredada. El cors no esta activo para los hls, deberiamos ordenar todo esto! :S
+        add_header 'Access-Control-Allow-Origin' '*';
+        add_header 'Access-Control-Allow-Credentials' 'true';
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+        add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
+
+        # First attempt to serve request as file, then
+        # as directory, then fall back to displaying a 404.
+        # Serve HLS fragments
+        try_files $uri $uri/ =404;
+
+    }
+
+}

@@ -1,0 +1,21 @@
+- name: Config Telegraf for Radio Stats XSL nginx-rtmp-module
+  #remote_user: ubuntu
+  hosts: influx
+  user: root
+  become: yes
+  #gather_facts: yes
+  tasks:
+    - name: Copy file telegraf.conf with owner and permissions
+      ansible.builtin.template:
+        src: telegraf.NED.conf
+        dest: /etc/telegraf.conf
+        owner: root
+        group: root
+        mode: 0644
+      notify:
+        - Restart telegraf
+  handlers:
+    - name: Restart telegraf
+      ansible.builtin.service:
+        name: telegraf
+        state: restarted

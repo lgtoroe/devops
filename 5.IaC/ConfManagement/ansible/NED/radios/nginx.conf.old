@@ -1,0 +1,155 @@
+user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+include /etc/nginx/modules-enabled/*.conf;
+
+events {
+	worker_connections 768;
+	# multi_accept on;
+}
+
+#http {
+
+	##
+	# Basic Settings
+	##
+
+#	sendfile on;
+#	tcp_nopush on;
+#	types_hash_max_size 2048;
+	# server_tokens off;
+
+	# server_names_hash_bucket_size 64;
+	# server_name_in_redirect off;
+
+#	include /etc/nginx/mime.types;
+#	default_type application/octet-stream;
+
+	##
+	# SSL Settings
+	##
+
+#	ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3; # Dropping SSLv3, ref: POODLE
+#	ssl_prefer_server_ciphers on;
+
+	##
+	# Logging Settings
+	##
+
+#	access_log /var/log/nginx/access.log;
+#	error_log /var/log/nginx/error.log;
+
+	##
+	# Gzip Settings
+	##
+
+#	gzip on;
+
+	# gzip_vary on;
+	# gzip_proxied any;
+	# gzip_comp_level 6;
+	# gzip_buffers 16 8k;
+	# gzip_http_version 1.1;
+	# gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
+	##
+	# Virtual Host Configs
+	##
+
+#	include /etc/nginx/conf.d/*.conf;
+#	include /etc/nginx/sites-enabled/*;
+	server {
+    	listen       8080;
+    	server_name  localhost;
+
+		    # sample handlers
+		    #location /on_play {
+		    #    if ($arg_pageUrl ~* localhost) {
+		    #        return 201;
+		    #    }
+		    #    return 202;
+		    #}
+		    #location /on_publish {
+		    #    return 201;
+		    #}
+
+		    #location /vod {
+		    #    alias /var/myvideos;
+		    #}
+
+		    # rtmp stat
+		    location /stat {
+		        rtmp_stat all;
+		        rtmp_stat_stylesheet stat.xsl;
+		    }
+
+		    location /stat.xsl {
+		        # you can move stat.xsl to a different location
+		        root /usr/share/nginx/rtmp;
+		    }
+
+		    # rtmp control
+		    location /control {
+		        rtmp_control all;
+		    }
+
+		    error_page   500 502 503 504  /50x.html;
+		    location = /50x.html {
+		        root   html;
+		    }
+		}
+
+#}
+
+
+#mail {
+#	# See sample authentication script at:
+#	# http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript
+#
+#	# auth_http localhost/auth.php;
+#	# pop3_capabilities "TOP" "USER";
+#	# imap_capabilities "IMAP4rev1" "UIDPLUS";
+#
+#	server {
+#		listen     localhost:110;
+#		protocol   pop3;
+#		proxy      on;
+#	}
+#
+#	server {
+#		listen     localhost:143;
+#		protocol   imap;
+#		proxy      on;
+#	}
+#}
+# This block of code tells NGINX to act as an RTMP server. 
+rtmp {
+	server {
+	# Sets the port the server will listen on.
+    listen 1935;
+	# The size of each chunk of data that will be sent.
+	# Flash Player will freeze if the chunk is too small, 
+	# which can cause a buffer-underflow condition.
+    chunk_size 4096;
+				# The IP addresses are allowed to publish content to the server.
+				# Allow only the localhost to publish content on NGINX RTMP.
+				allow publish 127.0.0.1;
+				# Deny publishing for everyone else.
+				# deny publish all;
+				# Defines a named application called "live"
+    application live {
+		# Tells NGINX to enable live streams for your users.
+		live on;
+		# sample HLS
+		hls on;
+		hls_path /var/www/hls/live;
+
+		include "hls_params";
+        #exec_push ffmpeg -nostdin -re -i rtmp://localhost:1935/live/$name
+		#-vn -c:a libmp3lame -f mp3 -content_type audio/mpeg icecast://source:ned12345@localhost:8000/$name.mp3;
+		# This line tells NGINX to disable recording. If this line is not included, 
+		# NGINX will keep recording and save your stream forever to your disk.
+		record off;
+		}
+	}
+}

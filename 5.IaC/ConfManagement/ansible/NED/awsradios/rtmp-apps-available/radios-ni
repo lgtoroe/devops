@@ -1,0 +1,9 @@
+application "radios-nc" {
+    live on;
+
+    # sample HLS
+    hls on;
+    hls_path /var/www/hls/radios/nc;
+    
+    include "hls_params";
+}

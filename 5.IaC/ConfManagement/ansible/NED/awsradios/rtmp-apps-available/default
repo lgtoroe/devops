@@ -1,0 +1,8 @@
+application live {
+    live on;
+
+    # sample HLS
+    #hls on;
+    #hls_path /tmp/hls;
+    #hls_sync 100ms;
+}

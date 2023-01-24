@@ -1,0 +1,25 @@
+server {
+    listen       8080;
+    server_name  localhost;
+
+    # rtmp stat
+    location /stat {
+        rtmp_stat all;
+        rtmp_stat_stylesheet stat.xsl;
+    }
+
+    location /stat.xsl {
+        # you can move stat.xsl to a different location
+        root /usr/share/nginx/rtmp;
+    }
+
+    # rtmp control
+    location /control {
+        rtmp_control all;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   html;
+    }
+}

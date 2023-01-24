@@ -1,0 +1,5 @@
+    hls_sync 100ms;
+    hls_fragment 10s;
+    hls_continuous on;
+    hls_fragment_naming system;
+    hls_type live;

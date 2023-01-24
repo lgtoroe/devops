@@ -1,0 +1,84 @@
+##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+#127.0.0.1       localhost
+255.255.255.255 broadcasthost
+::1             localhost
+# Added by Docker Desktop
+# To allow the same kube context to work on the host and the container:
+#127.0.0.1 kubernetes.docker.internal
+# End of section
+
+#127.0.0.1      rest.api.cdf.cl
+#127.0.0.1      api.cdf.firesport.io
+#34.192.190.219        api-direct.cdf.firesport.io
+#23.185.0.1	canal10.com.ni	www.canal10.com.ni
+
+#190.107.177.232		vapofast.cl	www.vapofast.cl
+192.168.101.114		influx
+## WeWork Network
+
+10.20.154.99	ubuntu
+10.20.154.112	windows
+
+## AWS ##
+# Radios
+
+34.227.179.209	cl-demodev
+3.210.118.240	bo-rqp
+18.204.181.118	cr-bestfm
+54.204.205.194	cr-disney
+54.159.160.124	cr-exa
+44.208.40.16	cr-lamejor
+44.208.102.147	cr-managua
+44.207.240.66	cr-momentosreloj
+44.205.196.71	cr-monumental
+44.198.64.141	cr-pacifico
+50.16.245.14	cr-planchatron
+3.225.242.204	cr-zfm
+52.72.79.133	ec-alfa
+75.101.250.41	ec-fabugy
+44.209.34.243	ec-galaxia
+3.226.155.50	ec-joya
+34.194.35.229	ec-lametro
+44.195.11.215	ec-latuya
+52.6.51.14	ec-likefm
+54.161.185.158	ec-rqp
+52.71.200.4	ec-tropicalida
+54.82.188.33	gt-alfa
+34.197.31.252	gt-exitos
+52.0.127.238	gt-exitosxela
+3.232.223.92	gt-fiestafm
+18.213.216.218	gt-flix939
+23.23.197.232	gt-flix985
+44.205.122.251	gt-galaxia
+44.206.12.103	gt-joya
+44.206.201.180	gt-lamarka
+44.209.29.53	gt-ranchera
+54.210.226.12	gt-sonora
+44.207.202.156	gt-tropicalida
+18.233.127.138	gt-xtrema
+52.6.86.23	ni-alfa
+52.4.19.22	ni-amante
+3.233.66.161	ni-joya
+44.206.92.180	ni-labuenisima
+34.192.97.215	ni-lamarka
+204.236.237.182	ni-lapicosa
+44.207.215.240	ni-lite
+44.207.169.45	ni-nova
+44.208.196.110	ni-pachangera
+3.229.114.252	ni-romantica
+54.156.121.221	ni-suprema
+107.21.211.59	ni-tropicalida
+44.209.35.26	py-rqp
+44.206.136.139	sv-sonora
+44.208.152.96	uy-delplata
+44.197.26.129	uy-futura
+34.236.159.201	uy-likefm
+100.24.222.130	uy-sarandi
+52.73.143.88	uy-sport890
+
+

@@ -1,0 +1,79 @@
+
+---
+- name: Ansible for Radios NED MediaWorks! Automagico
+  #remote_user: ubuntu
+  hosts: radios-cr
+  user: ubuntu
+  become: yes
+  gather_facts: yes
+  tasks:
+    - name: Create target directory for stats
+      file: path=/home/ubuntu/stat state=directory mode=0776 owner=ubuntu group=ubuntu
+
+    - name: Copy file entities.dtd with owner and permissions
+      ansible.builtin.template:
+        src: entities.dtd
+        dest: /home/ubuntu/stat/entities.dtd
+        owner: ubuntu
+        group: ubuntu
+        mode: 0644
+    - name: Copy file index.html with owner and permissions
+      ansible.builtin.template:
+        src: index.html
+        dest: /home/ubuntu/stat/index.html
+        owner: ubuntu
+        group: ubuntu
+        mode: 0644
+    - name: Copy file xml2json with owner and permissions
+      ansible.builtin.template:
+        src: xml2json.xslt
+        dest: /home/ubuntu/stat/xml2json.xslt
+        owner: ubuntu
+        group: ubuntu
+        mode: 0644
+
+    - name: Copy file nginx.conf with owner and permissions
+      ansible.builtin.template:
+        src: nginx.conf.rd
+        dest: /etc/nginx/nginx.conf
+        owner: root
+        group: root
+        mode: 0644
+      notify:
+        - Restart nginx
+
+    - name: Copy file stat.xsl for stats nginx-rtmp-module
+      ansible.builtin.template:
+        src: stat.xsl
+        dest: /home/ubuntu/stat/stat.xsl
+        owner: ubuntu
+        group: ubuntu
+        mode: 0664
+      notify: 
+        - Restart nginx
+    - name: Copy file icecast.xml with owner and permissions
+      ansible.builtin.template:
+        src: icecast.xml
+        dest: /etc/icecast2/icecast.xml
+        owner: root
+        group: icecast
+        mode: 0644 
+      notify:
+        - Restart icecast2
+
+    - name: Change permissions to HLS
+      file: path=/home/ubuntu/hls state=directory mode=0764 owner=ubuntu group=ubuntu
+
+  handlers:
+    - name: Restart nginx
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+
+    - name: Restart icecast2
+      ansible.builtin.service:
+        name: icecast2
+        state: restarted
+
+    # - name: Disbale icecast service
+    #   command: sudo systemctl disable icecast2

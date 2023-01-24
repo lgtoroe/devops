@@ -1,0 +1,63 @@
+[global_tags]
+[agent]
+  interval = "10s"
+  round_interval = true
+  metric_batch_size = 1000
+  metric_buffer_limit = 10000
+  collection_jitter = "0s"
+  flush_interval = "10s"
+  flush_jitter = "0s"
+  precision = ""
+  hostname = ""
+  omit_hostname = false
+[[outputs.influxdb]]
+  urls = ["http://127.0.0.1:8086"]
+  database = "telegraf"
+  skip_database_creation = false
+  username = "admin"
+  password = "fdbv1291"
+[[inputs.cpu]]
+  percpu = true
+  totalcpu = true
+  collect_cpu_time = false
+  report_active = false
+[[inputs.disk]]
+  ignore_fs = ["tmpfs", "devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs"]
+[[inputs.diskio]]
+[[inputs.kernel]]
+[[inputs.mem]]
+[[inputs.ping]]
+  interval = "60s"
+  urls = ["lared.cl", "cl.estadio.com", "www.vtv.com.hn", "www.tn23.tv", "www.atv.pe", "www.repretel.com", "www.chapintv.com",
+	"192.168.101.1", "192.168.101.2", "192.168.101.3", "192.168.101.5", "192.168.101.6", "192.168.101.7"]
+  count = 3
+  timeout = 2.0
+[[inputs.processes]]
+[[inputs.swap]]
+[[inputs.system]]
+[[inputs.snmp]]
+  agents = ["udp://192.168.199.254:161"]
+  version = 2
+  community = "public"
+  # name = “snmp”
+  [[inputs.snmp.field]]
+    name = "hostname"
+    oid = "RFC1213-MIB::sysName.0"
+    is_tag = true
+  [[inputs.snmp.table]]
+    name = "snmp"
+    inherit_tags = [ "hostname" ]
+    oid = "IF-MIB::ifXTable"
+    [[inputs.snmp.table.field]]
+      name = "ifName"
+      oid = "IF-MIB::ifName"
+      is_tag = true
+    [[inputs.snmp.table.field]]
+      name = "ifOperStatus"
+      oid = "IF-MIB::ifOperStatus"
+      is_tag = true
+[[inputs.snmp_trap]]
+  service_address = "udp://:162"
+#  path = ["/usr/share/snmp/mibs"]
+#  timeout = "5s"
+#  version = "2c"

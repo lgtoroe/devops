@@ -1,0 +1,34 @@
+
+---
+- name: Let's copy our executable script to remote location, execute script and get result back.
+  #remote_user: ubuntu
+  hosts: cr-monumental
+  user: ubuntu
+  become: yes
+  tasks:
+    - name: Copy file nginx.conf with owner and permissions
+      ansible.builtin.copy:
+        src: nginx.conf
+        dest: /etc/nginx/nginx.conf
+        owner: root
+        group: root
+        mode: 0644
+    - name: Copy file icecast.xml with owner and permissions
+      ansible.builtin.copy:
+        src: icecast.xml
+        dest: /etc/icecast2/icecast.xml
+        owner: root
+        group: icecast
+        mode: 0644
+     # - name: Transfer config nginx
+     #   copy: src=nginx.conf dest=/etc/nginx/nginx.conf mode=0644
+
+
+    # - name: Transfer config icecast2
+    #   copy: src=icecast.xml dest=/etc/icecast2/icecast.xml mode=0644
+ 
+    - name: Restart service nginx
+      command: sudo service nginx restart
+
+    - name: Restart service icecast
+      command: sudo service icecast2 restart
